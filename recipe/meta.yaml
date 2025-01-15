@@ -10,14 +10,14 @@ source:
   sha256: 50414918914b8cd893d0dfa7fef32ee1912ba1802ead37d9502b3d8936d8c68a
 
 build:
-  number: 0
-  skip: true  # [py<37]
-  script: {{ PYTHON }} -m pip install . -vv
+  noarch: python
+  number: 1
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
 
 requirements:
   host:
     - pip
-    - python
+    - python {{ python_min }}
     - setuptools >=49.2.0
     - wheel >=0.34.2
   run:
@@ -28,7 +28,7 @@ requirements:
     - numpy >=1.17.0
     - pandas >=1.1.1
     - pytest >=5.4.1
-    - python
+    - python >={{ python_min }}
     - requests >=1.25.8
     - texttable >=1.6.2
     - tqdm >=4.43.0
@@ -44,9 +44,8 @@ test:
     - python -c "import sys; import pandas; import bgen_reader; sys.exit(bgen_reader.test())"
 
 about:
-  home: http://github.com/limix/{{ name }}-py
+  home: http://github.com/limix/bgen-reader-py
   license: MIT
-  license_family: MIT
   license_file: LICENSE.md
   summary: A BGEN file format reader
   description: |
@@ -55,8 +54,9 @@ about:
     ploidy and number of alleles. It was designed to provides a compact data
     representation without sacrificing variant access performance.
   doc_url: https://bgen-reader.readthedocs.io
-  dev_url: https://github.com/limix/{{ name }}-py
+  dev_url: https://github.com/limix/bgen-reader-py
 
 extra:
   recipe-maintainers:
+    - danielnachun
     - Horta
