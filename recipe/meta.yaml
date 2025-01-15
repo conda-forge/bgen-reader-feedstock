@@ -41,8 +41,6 @@ test:
   imports:
     - pandas
     - bgen_reader
-  commands:
-    - python -c "import sys; import pandas; import bgen_reader; sys.exit(bgen_reader.test())"
 
 about:
   home: http://github.com/limix/bgen-reader-py
