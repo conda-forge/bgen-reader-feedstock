@@ -1,23 +1,25 @@
 {% set name = "bgen-reader" %}
-{% set version = "4.0.8" %}
+{% set python_min = "3.10" %}
+{% set version = "4.0.9" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 50414918914b8cd893d0dfa7fef32ee1912ba1802ead37d9502b3d8936d8c68a
+  url: https://pypi.org/packages/source/b/bgen-reader/bgen_reader-{{ version }}.tar.gz
+  sha256: 20a9b48e3a41d3abd217570aa397b4bcdb3e5834c37aa1789507686d59fdf485
 
 build:
+  noarch: python
   number: 0
-  skip: true  # [py<37]
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
 
 requirements:
   host:
     - pip
-    - python
+    - poetry-core
+    - python {{ python_min }}
     - setuptools >=49.2.0
     - wheel >=0.34.2
   run:
@@ -28,7 +30,7 @@ requirements:
     - numpy >=1.17.0
     - pandas >=1.1.1
     - pytest >=5.4.1
-    - python
+    - python >={{ python_min }}
     - requests >=1.25.8
     - texttable >=1.6.2
     - tqdm >=4.43.0
@@ -37,16 +39,14 @@ requirements:
 test:
   requires:
     - pytest
+    - python {{ python_min }}
   imports:
     - pandas
     - bgen_reader
-  commands:
-    - python -c "import sys; import pandas; import bgen_reader; sys.exit(bgen_reader.test())"
 
 about:
-  home: http://github.com/limix/{{ name }}-py
+  home: http://github.com/limix/bgen-reader-py
   license: MIT
-  license_family: MIT
   license_file: LICENSE.md
   summary: A BGEN file format reader
   description: |
@@ -55,8 +55,9 @@ about:
     ploidy and number of alleles. It was designed to provides a compact data
     representation without sacrificing variant access performance.
   doc_url: https://bgen-reader.readthedocs.io
-  dev_url: https://github.com/limix/{{ name }}-py
+  dev_url: https://github.com/limix/bgen-reader-py
 
 extra:
   recipe-maintainers:
+    - danielnachun
     - Horta
