@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/b/bgen-reader/bgen_reader-{{ version }}.tar.gz
-  sha256: 50414918914b8cd893d0dfa7fef32ee1912ba1802ead37d9502b3d8936d8c68a
+  sha256: 20a9b48e3a41d3abd217570aa397b4bcdb3e5834c37aa1789507686d59fdf485
 
 build:
   noarch: python
