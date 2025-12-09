@@ -42,7 +42,7 @@ tests:
       imports:
         - pandas
         - bgen_reader
-      pip_check: false
+      pip_check: true
   - requirements:
       run:
         - pytest
