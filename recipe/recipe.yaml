@@ -1,25 +1,26 @@
-{% set name = "bgen-reader" %}
-{% set python_min = "3.10" %}
-{% set version = "4.0.9" %}
+schema_version: 1
+
+context:
+  version: 4.0.9
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: bgen-reader
+  version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/b/bgen-reader/bgen_reader-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/b/bgen-reader/bgen_reader-${{ version }}.tar.gz
   sha256: 20a9b48e3a41d3abd217570aa397b4bcdb3e5834c37aa1789507686d59fdf485
 
 build:
+  number: 1
   noarch: python
-  number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
+  script: ${{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
 
 requirements:
   host:
     - pip
     - poetry-core
-    - python {{ python_min }}
+    - python =${{ python_min }}
     - setuptools >=49.2.0
     - wheel >=0.34.2
   run:
@@ -30,22 +31,24 @@ requirements:
     - numpy >=1.17.0
     - pandas >=1.1.1
     - pytest >=5.4.1
-    - python >={{ python_min }}
+    - python >=${{ python_min }}
     - requests >=1.25.8
     - texttable >=1.6.2
     - tqdm >=4.43.0
     - xarray >=0.16.0
 
-test:
-  requires:
-    - pytest
-    - python {{ python_min }}
-  imports:
-    - pandas
-    - bgen_reader
+tests:
+  - python:
+      imports:
+        - pandas
+        - bgen_reader
+      pip_check: false
+  - requirements:
+      run:
+        - pytest
+        - python =${{ python_min }}
 
 about:
-  home: http://github.com/limix/bgen-reader-py
   license: MIT
   license_file: LICENSE.md
   summary: A BGEN file format reader
@@ -54,8 +57,9 @@ about:
     It supports both unphased genotypes and phased haplotype data with variable
     ploidy and number of alleles. It was designed to provides a compact data
     representation without sacrificing variant access performance.
-  doc_url: https://bgen-reader.readthedocs.io
-  dev_url: https://github.com/limix/bgen-reader-py
+  homepage: http://github.com/limix/bgen-reader-py
+  repository: https://github.com/limix/bgen-reader-py
+  documentation: https://bgen-reader.readthedocs.io
 
 extra:
   recipe-maintainers:
