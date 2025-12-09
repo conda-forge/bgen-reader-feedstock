@@ -47,6 +47,8 @@ tests:
       run:
         - pytest
         - python =${{ python_min }}
+    script:
+      - pip check
 
 about:
   license: MIT
